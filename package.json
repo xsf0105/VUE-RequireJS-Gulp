@@ -1,0 +1,30 @@
+{
+  "name": "wxhandicapped",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.oschina.net/wenwu92/WXhandicapped.git"
+  },
+  "author": "wen.wu",
+  "license": "ISC",
+  "devDependencies": {
+    "bower": "^1.5.2",
+    "gulp": "^3.9.0",
+    "gulp-sass": "^2.0.4",
+    "gulp-sourcemaps": "^1.5.2"
+  },
+  "dependencies": {
+    "colors": "^1.1.2",
+    "connect": "^3.4.0",
+    "del": "^2.2.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-uglify": "^1.5.1",
+    "gulp-zip": "^3.0.2",
+    "serve-static": "^1.10.0"
+  }
+}

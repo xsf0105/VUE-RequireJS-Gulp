@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+    <meta content="yes" name=" apple-mobile-web-app-capable" />
+    <title>首页-新闻</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <link rel="stylesheet" href="lib/weui/dist/style/weui.min.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="lib/weui/dist/style/weui.min.css"/>
+    <link rel="stylesheet" href="css/iconfont.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body class="news-body" id="index-news" v-cloak>
+
+    <div class="header clearfix">
+        <div class="toper-bar fl">
+            <div class="col5 col-nav" v-for="tab in typeList">
+                <a v-bind:class="{ 'cur': showType== $index}" @click="switchTab($index,tab.value)" href="javascript:void(0);">{{tab.lable}}</a>
+            </div>
+        </div>
+        <div class="location fr">
+            <a href="">绍兴</a>
+        </div>
+    </div>
+
+    <div class="type-wrap">
+        <div class="srh">
+            <div class="container">
+                <input type="text" placeholder="请输入政策内容关键字" v-model="keyWord">
+                <a href="javascript:void(0);" @click="srh()"><i class="icon iconfont">&#xe618;</i></a>
+            </div>
+        </div>
+
+        <div class="thumbnail-wrap">
+            <div v-for="item in typeList[showType].newsList">
+                <!-- 大图 -->
+                <div class="thumnail" v-show="item.rollImg !== ''&&item.titleImg==''||item.rollImg !== ''&&item.titleImg!==''" @click="goDetails(item.id)">
+                    <div class="container">
+                        <div class="thumnail-wrap">
+                            <div class="pic">
+                                <img :src="item.rollImg"  alt="">
+                                <div class="tit">
+                                    <h2>{{item.title}}</h2>
+                                </div>
+                            </div>
+                            <div class="caption clearfix">
+                                <p class="info">{{item.abstracts}}</p>
+                                <p>
+                                    <span class="fl">{{item.author}}</span>
+                                    <span class="fr"><i class="icon iconfont">&#xe615;</i>{{item.clickNum}}次</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 小图 -->
+                <div class="hot-thumnail" v-show="item.rollImg==''&&item.titleImg!=='' " @click="goDetails(item.id)">
+                    <div class="container">
+                        <div class="thumnail-wrap">
+                            <img src="img/hot.png" alt="" class="hot-icon">
+                            <div class="thum-body">
+                                <h2>{{item.title}}</h2>
+                                <p>{{item.abstracts}}</p>
+                                <img :src="item.titleImg" alt="">
+                            </div>
+                            <div class="thum-foot clearfix">
+                                <p>
+                                    <span class="fl">{{item.author}}</span>
+                                    <span class="fr"><i class="icon iconfont">&#xe615;</i>{{item.clickNum}}次</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 无图 -->
+                <div class="no-thumnail" v-show="item.rollImg==''&&item.titleImg=='' " @click="goDetails(item.id)">
+                    <div class="container">
+                        <div class="thumnail-wrap">
+                            <div class="thum-body">
+                                <h2>{{item.title}}</h2>
+                                <p>{{item.abstracts}}</p>
+                            </div>
+                            <div class="thum-foot clearfix">
+                                <p>
+                                    <span class="fl">{{item.author}}</span>
+                                    <span class="fr"><i class="icon iconfont">&#xe615;</i>{{item.clickNum}}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="loadmore" v-show="bottomTxt !== ''&& typeList[showType].newsList !== '' ">
+                {{bottomTxt}}
+            </div>
+        </div>
+
+        <div class="no-res" v-show="keyWord !== '' && typeList[showType].newsList == ''">
+            <div class="container">
+                <img src="img/nores.png" alt="">
+                <h4>无搜索结果</h4>
+            </div>
+        </div>
+
+        <div class="no-res" v-show="keyWord == '' && typeList[showType].newsList == ''">
+            <div class="container">
+                <img src="img/nodata.png" alt="">
+                <h4>没有数据~</h4>
+            </div>
+        </div>
+    </div>
+
+    <footer class="fixed-bottom clearfix">
+        <div class="col4">
+            <a href="index.html">
+                <i class="icon iconfont">&#xe602;</i>
+                服务
+            </a>
+        </div>
+        <div class="col4">
+            <a class="cur" href="javascript:void(0);">
+                <i class="icon iconfont">&#xe613;</i>
+                新闻
+            </a>
+        </div>
+        <div class="col4">
+            <a href="">
+                <i class="icon iconfont">&#xe609;</i>
+                发现
+            </a>
+        </div>
+        <div class="col4">
+            <a href="">
+                <i class="icon iconfont">&#xe619;</i>
+                我的
+            </a>
+        </div>
+    </footer>
+</body>
+<script data-main="js/news" src="lib/requirejs/require.js"></script>
+</html>

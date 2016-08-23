@@ -1,0 +1,25 @@
+{
+  "name": "WXhandicapped",
+  "description": "",
+  "main": "server.js",
+  "authors": [
+    "wen.wu"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.3",
+    "vue": "^1.0.20",
+    "requirejs": "^2.2.0",
+    "Swiper": "swiper#^3.3.1",
+    "weui": "^0.4.3"
+  }
+}

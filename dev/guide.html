@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+    <meta content="yes" name=" apple-mobile-web-app-capable" />
+    <title>办证指南</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <link rel="stylesheet" href="lib/weui/dist/style/weui.min.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/iconfont.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body style="background: #fff;" id="guide" v-cloak>
+    <div class="toper">
+        <div class="sub-banner sub-banner2">
+            <a href="index.html"><img src="img/arrow_left.png" alt=""></a>
+            <img src="img/title_guide.png" alt="">
+        </div>
+    </div>
+
+    <div class="side-nav">
+        <div @click="switch('1')" :class=" {'cur':guideType == 1} " class="nav-block"><a href="javascript:void(0);">证件办理</a></div>
+        <div @click="switch('2')" :class=" {'cur':guideType == 2} " class="nav-block"><a href="javascript:void(0);">升级</a></div>
+        <div @click="switch('3')" :class=" {'cur':guideType == 3} " class="nav-block"><a href="javascript:void(0);">补办</a></div>
+        <div @click="switch('4')" :class=" {'cur':guideType == 4} " class="nav-block"><a href="javascript:void(0);">换新</a></div>
+        <div @click="switch('5')" :class=" {'cur':guideType == 5} " class="nav-block"><a href="javascript:void(0);">迁移</a></div>
+    </div>
+    <div class="rside-article">
+        <div class="container">
+            <p>
+                1. 办理对象：{{renderObj.transactObject}}
+                <br><br>2. 办理材料：{{renderObj.remark}}
+                <br><br>3. 办理时限：{{renderObj.transactEnd}}
+                <br><br>4. 收费标准：{{renderObj.transactMoney}}
+            </p>
+        </div>
+    </div>
+</body>
+<script data-main="js/guide" src="lib/requirejs/require.js"></script>
+</html>

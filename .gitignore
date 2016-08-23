@@ -1,0 +1,5 @@
+node_modules/
+release/
+bower_components/
+backup/
+.idea/

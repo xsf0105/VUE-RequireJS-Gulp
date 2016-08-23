@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+    <meta content="yes" name=" apple-mobile-web-app-capable" />
+    <title>政策解读</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <link rel="stylesheet" href="lib/weui/dist/style/weui.min.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/iconfont.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body id="policy" v-cloak>
+    <div class="toper">
+        <div class="sub-banner">
+            <a href="index.html"><img src="img/arrow_left.png" alt=""></a>
+            <img src="img/title_policy.png" alt="">
+        </div>
+        <div class="toper-nav toper-nav2 clearfix">
+            <div class="col2 col-nav" ><a @click="typeSwitch(0)" v-bind:class="{ 'cur': showType == 0}" href="javascript:void(0);">政策信息</a></div>
+            <div class="col2 col-nav"><a @click="typeSwitch(1)" v-bind:class="{ 'cur': showType == 1}" href="javascript:void(0);">在线匹配</a></div>
+        </div>
+    </div>
+
+    <div class="policy-info" v-show="showType == 0">
+        <div class="srh">
+            <div class="container">
+                <input type="text" placeholder="请输入政策内容关键字"
+                       v-on:keyup.13="srh()"
+                       v-model="keyWord">
+                <a href="javascript:;" @click="srh()"><i class="icon iconfont">&#xe618;</i></a>
+            </div>
+        </div>
+
+        <div class="no-thumnail" v-for="item in renderObj.listArr" @click="goDetails(item.id)">
+            <div class="container">
+                <div class="thumnail-wrap">
+                    <div class="thum-body">
+                        <h2>{{item.title}}</h2>
+                        <p>{{item.content}}</p>
+                    </div>
+                    <div class="thum-foot clearfix">
+                        <p>
+                            <span class="fl">{{item.createDate}}</span>
+                            <span class="fr"><i class="icon iconfont"></i>{{item.clickNum}}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="loadmore" v-show="bottomTxt !== '' ">
+            {{bottomTxt}}
+        </div>
+
+        <div class="no-res" v-show="searchMode && renderObj.listArr==''">
+            <div class="container">
+                <img src="img/nores.png" alt="">
+                <h4>无搜索结果</h4>
+            </div>
+        </div>
+
+        <div class="no-res" v-show="!searchMode && renderObj.listArr == ''">
+            <div class="container">
+                <img src="img/nodata.png" alt="">
+                <h4>没有数据~</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="policy-match" v-show=" showType == 1 ">
+        <div class="srh">
+            <div class="container">
+                <input type="text" placeholder="请输入政策内容关键字"
+                       v-on:keyup.13="srh()"
+                       v-model="keyWord2">
+                <a href="javascript:;" @click="srh()"><i class="icon iconfont">&#xe618;</i></a>
+            </div>
+        </div>
+
+        <div class="no-thumnail" v-for="item in renderObj2.listArr" @click="goDetails(item.id)">
+            <div class="container">
+                <div class="thumnail-wrap">
+                    <div class="thum-body">
+                        <h2>{{item.title}}</h2>
+                        <p>{{item.content}}</p>
+                    </div>
+                    <div class="thum-foot clearfix">
+                        <p>
+                            <span class="fl">{{item.createDate}}</span>
+                            <span class="fr"><i class="icon iconfont"></i>{{item.clickNum}}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="loadmore" v-show="bottomTxt2 !== '' ">
+            {{bottomTxt2}}
+        </div>
+
+        <div class="no-res" v-show="searchMode2 && renderObj2.listArr==''">
+            <div class="container">
+                <img src="img/nores.png" alt="">
+                <h4>无搜索结果</h4>
+            </div>
+        </div>
+
+        <div class="no-res" v-show="!searchMode2 && renderObj2.listArr == ''">
+            <div class="container">
+                <img src="img/nodata.png" alt="">
+                <h4>没有数据~</h4>
+            </div>
+        </div>
+    </div>
+
+    <!--
+            <div class="thumnail">
+                <div class="container">
+                    <div class="thumnail-wrap">
+                        <div class="pic">
+                            <img src="img/thumbnail.png" alt="">
+                            <div class="tit">
+                                <h2>关于实施《残疾人技职业技能提升》
+                                    <br>2016-2020年的通知</h2>
+                            </div>
+                        </div>
+                        <div class="caption clearfix">
+                            <p class="info">关于实施《残疾人技职业技能提升》2016-2020年的通知关于实施。</p>
+                            <p>
+                                <span class="fl">绍残第（2016）14号</span>
+                                <span class="fr"><i class="icon iconfont">&#xe615;</i>1324次</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hot-thumnail">
+                <div class="container">
+                    <div class="thumnail-wrap">
+                        <img src="img/hot.png" alt="" class="hot-icon">
+                        <div class="thum-body">
+                            <h2>残疾人职业技能</h2>
+                            <p>关于实施《残疾人技职业技能提通知关于实施。</p>
+                            <img src="img/thumbnail_hot.png" alt="">
+                        </div>
+                        <div class="thum-foot clearfix">
+                            <p>
+                                <span class="fl">绍残第（2016）14号</span>
+                                <span class="fr"><i class="icon iconfont">&#xe615;</i>1324次</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+</body>
+<script data-main="js/policy" src="lib/requirejs/require.js"></script>
+</html>

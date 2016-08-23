@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+    <meta content="yes" name=" apple-mobile-web-app-capable" />
+    <title>劳动就业</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <link rel="stylesheet" href="lib/weui/dist/style/weui.min.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/iconfont.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body id="labour" v-cloak>
+    <div class="toper">
+        <div class="sub-banner sub-banner2">
+            <a href="index.html"><img src="img/arrow_left.png" alt=""></a>
+            <img src="img/title_labour.png" alt="">
+        </div>
+        <div class="toper-nav toper-nav2 clearfix">
+            <div class="col4 col-nav">
+                <a @click="init()" v-bind:class="{'cur': showType == 0}" href="javascript:void(0);">就业指导</a>
+            </div>
+            <div class="col4 col-nav">
+                <a @click="jobMatch()" v-bind:class="{'cur': showType == 1}" href="javascript:void(0);">岗位匹配</a>
+            </div>
+            <div class="col4 col-nav">
+                <a @click="jobIntend()" v-bind:class="{'cur': showType == 2}" href="javascript:void(0);">求职意向</a>
+            </div>
+            <div class="col4 col-nav">
+                <a @click="association()" v-bind:class="{'cur': showType == 3}" href="javascript:void(0);">招聘会</a>
+            </div>
+        </div>
+    </div>
+
+    <div v-show="showType == 0">
+        <div class="srh">
+            <div class="container">
+                <input type="text" placeholder="请输入就业指导内容关键字" v-model="keyWord">
+                <a href="javascript:void(0);" @click="srh()"><i class="icon iconfont">&#xe618;</i></a>
+            </div>
+        </div>
+
+        <div class="list">
+            <ul>
+                <li v-for="item in renderObj.listArr">
+                    <img class="hot-icon" src="img/hot.png" alt="" width="35" v-show="($index==0||$index==1||$index==2 ) && !searchMode">
+                    <a href="javascript:void(0);" @click="goDetails(item.id)">{{item.serviceName}}</a>
+                </li>
+            </ul>
+            <div class="loadmore" v-show="bottomTxt !== '' ">
+                {{bottomTxt}}
+            </div>
+        </div>
+
+        <div class="no-res" v-show="searchMode && renderObj.listArr == ''">
+            <div class="container">
+                <img src="img/nores.png" alt="">
+                <h4>无搜索结果</h4>
+            </div>
+        </div>
+
+        <div class="no-res" v-show="!searchMode && renderObj.listArr == ''">
+            <div class="container">
+                <img src="img/nodata.png" alt="">
+                <h4>没有数据~</h4>
+            </div>
+        </div>
+
+    </div>
+
+    <div v-show="showType == 1">
+        <div class="srh">
+            <div class="container">
+                <input type="text" placeholder="请输入岗位匹配内容关键字"
+                       v-on:keyup.13="srh()"
+                       v-model="matchKeyWord">
+                <a href="javascript:void(0);" @click="srh()"><i class="icon iconfont">&#xe618;</i></a>
+            </div>
+        </div>
+        <div class="job-match">
+            <div class="container">
+                <div class="job-list" v-for="item in matchRenderObj.listArr">
+                    <div class="list-body clearfix" @click="goDetails(item.id)">
+                        <!--<img class="fl" src="img/company_logo.png" alt="" width="50" height="50">-->
+                        <h4>{{item.quartersName}}</h4>
+                        <p>年薪: <span>{{item.monSalary}} 元</span></p>
+                    </div>
+                    <div class="list-footer clearfix">
+                        <span>{{item.orgName}}</span>
+                        <button class="active fr">已投递</button>
+                        <!--<button class="fr">已投递</button>-->
+                    </div>
+                </div>
+            </div>
+            <div class="no-data" style="margin-bottom: 10px;">
+                <b class="line"></b>
+                <span>没有更多岗位了</span>
+            </div>
+        </div>
+
+        <div class="no-res" v-show="matchSearchMode && matchRenderObj.listArr == ''">
+            <div class="container">
+                <img src="img/nores.png" alt="">
+                <h4>无搜索结果</h4>
+            </div>
+        </div>
+    </div>
+
+    <div v-show="showType == 2">
+        <div class="select">
+            <div class="container">
+                <p>
+                    <span>求职岗位：</span>
+                    <select  v-model="quarters">
+                        <option value="" disabled>请选择求职岗位</option>
+                        <option value="技工">技工</option>
+                        <option value="技工">技工</option>
+                        <option value="技工">技工</option>
+                        <option value="技工">技工</option>
+                    </select>
+                </p>
+                <p>
+                    <span>月薪要求：</span>
+                    <select name="" id="" v-model="wages">
+                        <option value="" disabled>请选择月薪要求</option>
+                        <option value="5000">5000</option>
+                        <option value="5000">6000</option>
+                        <option value="5000">7000</option>
+                    </select>
+                </p>
+                <p>
+                    <span>工作地点：</span>
+                    <select name=""  v-model="workArea">
+                        <option value="" disabled>请选择工作地点</option>
+                        <option value="3301">3301</option>
+                        <option value="3301">3301</option>
+                        <option value="3301">3301</option>
+                    </select>
+                </p>
+                <div class="my-feature">
+                    <span class="fl">个人特点：</span>
+                    <ul class="label">
+                        <li v-for="label in labelArr">
+                            {{label}}
+                            <i @click="delLabel(label,$index)"></i>
+                        </li>
+                    </ul>
+                    <button @click="showDialog()"><img src="img/upload_btn.png" alt=""></button>
+                    <textarea v-model="vitaeExtend" name="" cols="30" rows="10" placeholder="补充说明"></textarea>
+                </div>
+            </div>
+            <div class="fixed-bottom submit-btn">
+                <button :class="{'cur':quarters!==''&&wages!==''&&workArea!=='' }" @click="jobIntend()">提 交</button>
+            </div>
+        </div>
+
+        <!-- dialog -->
+        <div class="weui_dialog_confirm labour-type3" v-show="isDialogShow">
+            <div class="weui_mask"></div>
+            <div class="weui_dialog">
+                <!--<button class="close" @click="closeDialog()">-->
+                    <!--<img src="img/close_btn.png" alt="">-->
+                <!--</button>-->
+                <div class="weui_dialog_hd"><strong class="weui_dialog_title">请选择自我评价标签</strong></div>
+                <div class="weui_dialog_bd">
+                    <ul>
+                        <li v-bind:class="{ 'cur':label.checked }" v-for="label in labels" @click="choiseLabel(label.name,$index)">{{label.name}}</li>
+                    </ul>
+                    <p>提示：为保证您找到合适的工作岗位，请客观地进行自我评价的选择。</p>
+                </div>
+                <footer>
+                    <button class="submit cur" @click="submitLabels()">确 定</button>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <div v-show="showType == 3">
+        <div class="srh">
+            <div class="container">
+                <input type="text" placeholder="请输入招聘会内容关键字"
+                       v-on:keyup.13="srh()"
+                       v-model="associationKeyWord">
+                <a href="javascript:void(0);" @click="srh()"><i class="icon iconfont">&#xe618;</i></a>
+            </div>
+        </div>
+        <div class="list">
+            <ul>
+                <li v-for="list in associationName.listArr">
+                    <img class="hot-icon" src="img/hot.png" alt="" width="35" v-show="($index==0||$index==1||$index==2) && !associationSearchMode">
+                    <a href="javascript:void(0);" @click="goDetails(list.id)">{{list.associationName}}</a>
+                </li>
+            </ul>
+
+            <div class="loadmore" v-show="associationBottomTxt !== '' ">
+                {{associationBottomTxt}}
+            </div>
+        </div>
+
+        <div class="no-res" v-show="associationSearchMode && associationName.listArr == ''">
+            <div class="container">
+                <img src="img/nores.png" alt="">
+                <h4>无搜索结果</h4>
+            </div>
+        </div>
+
+        <div class="no-res" v-show="!associationSearchMode && associationName.listArr == ''">
+            <div class="container">
+                <img src="img/nodata.png" alt="">
+                <h4>没有数据~</h4>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script data-main="js/labour" src="lib/requirejs/require.js"></script>
+</html>
